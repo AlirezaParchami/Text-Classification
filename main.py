@@ -58,3 +58,12 @@ for n in [2]:
         if (line[0] == "spam"):
             words = line[1]
             neg_data.append((create_ngram_features(words, n), "negative"))
+
+    print(len(neg_data))  #747
+    print(len(pos_data))  #4825
+    train_set = pos_data[:4000] + neg_data[:650]
+    test_set =  pos_data[4000:] + neg_data[650:]
+    classifier = NaiveBayesClassifier.train(train_set)
+
+    accuracy = nltk.classify.util.accuracy(classifier, test_set)
+    print(str(n)+'-gram accuracy:', accuracy)
